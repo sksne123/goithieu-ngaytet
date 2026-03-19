@@ -19,6 +19,31 @@
   <body>
     <div id="petal-container"></div>
 
+    <!-- MODAL POPUP -->
+    <div id="cardModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <img id="modalImage" src="" alt="Chi tiết" />
+        <h3 id="modalTitle"></h3>
+        <p id="modalDesc"></p>
+        <p id="modalDetail"></p>
+      </div>
+    </div>
+
+    <!-- MUSIC CONTROL (nhạc nền riêng, có thể giữ hoặc bỏ) -->
+    <div class="music-control">
+      <button id="musicToggle" class="music-btn">
+        <i class="fas fa-music"></i>
+        <span id="musicStatus">Bật nhạc</span>
+      </button>
+      <audio id="backgroundMusic" loop>
+        <source
+          src="NHẠC/YTSave.com_YouTube_Tet-Dong-Day-KHOA-x-Kay-Tran-x-Duck-V-HO_Media_gOtfJ151ue4_007_48k.m4a"
+          type="audio/mpeg"
+        />
+      </audio>
+    </div>
+
     <header id="main-header">
       <div class="logo">
         <h1 id="logo-title">🇻🇳 Tết Việt Nam</h1>
@@ -35,9 +60,38 @@
       </nav>
     </header>
 
+    <!-- HERO SECTION WITH VIDEO BACKGROUND -->
     <section class="hero">
-      <h2>Tết Nguyên Đán Việt Nam</h2>
-      <p>Linh thiêng - Đoàn viên - Rực rỡ sắc xuân</p>
+      <div class="video-container">
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
+          class="hero-video"
+          id="heroVideo"
+        >
+          <source
+            src="VIDEO/YTSave.com_YouTube_Tet-Dong-Day-KHOA-x-Kay-Tran-x-Duck-V-HO_Media_gOtfJ151ue4_001_1080p.mp4"
+            type="video/mp4"
+          />
+          <!-- Fallback: nếu trình duyệt không hỗ trợ video, hiển thị ảnh -->
+          <img
+            src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=1350&q=80"
+            alt="Tết Nguyên Đán"
+            class="hero-fallback"
+          />
+        </video>
+        <div class="overlay"></div>
+        <!-- Nút bật/tắt âm thanh video -->
+        <button class="video-sound-btn" id="videoSoundBtn">
+          <i class="fas fa-volume-mute"></i>
+        </button>
+      </div>
+      <div class="hero-content">
+        <h2>Tết Nguyên Đán Việt Nam</h2>
+        <p>Linh thiêng - Đoàn viên - Rực rỡ sắc xuân</p>
+      </div>
     </section>
 
     <section id="gioi-thieu" class="container">
@@ -88,7 +142,14 @@
     <section id="phong-tuc" class="container">
       <h2 class="section-title">Phong tục ngày Tết</h2>
       <div class="card-grid">
-        <div class="card">
+        <!-- Card 1 -->
+        <div
+          class="card"
+          data-title="Dọn dẹp nhà cửa"
+          data-desc="Trước Tết, mọi nhà đều dọn dẹp sạch sẽ để xua tan điềm xấu, đón tài lộc."
+          data-detail="Dọn dẹp nhà cửa ngày Tết không chỉ là vệ sinh mà còn mang ý nghĩa tẩy rửa những điều không may của năm cũ, chuẩn bị đón những điều tốt đẹp. Nhà cửa sạch sẽ còn để đón ông bà, tổ tiên về ăn Tết."
+          data-img="anh/dondep.jpg"
+        >
           <img class="card-img" src="anh/dondep.jpg" alt="Dọn dẹp nhà cửa" />
           <div class="card-content">
             <h3>Dọn dẹp nhà cửa</h3>
@@ -98,7 +159,14 @@
             </p>
           </div>
         </div>
-        <div class="card">
+        <!-- Card 2 -->
+        <div
+          class="card"
+          data-title="Cúng ông Công ông Táo"
+          data-desc="Ngày 23 tháng Chạp, người Việt cúng tiễn Táo quân về trời báo cáo."
+          data-detail="Lễ cúng ông Công ông Táo diễn ra vào 23 tháng Chạp âm lịch. Người dân thường thả cá chép (cá chép hóa rồng) để tiễn Táo quân lên chầu trời, báo cáo mọi việc tốt xấu trong năm qua."
+          data-img="anh/ongcongongtao.jpg"
+        >
           <img
             class="card-img"
             src="anh/ongcongongtao.jpg"
@@ -111,7 +179,14 @@
             </p>
           </div>
         </div>
-        <div class="card">
+        <!-- Card 3 -->
+        <div
+          class="card"
+          data-title="Gói bánh chưng"
+          data-desc="Gia đình quây quần gói bánh chưng, bánh tét – biểu tượng của đất trời."
+          data-detail="Bánh chưng hình vuông tượng trưng cho đất, bánh tét hình trụ dài tượng trưng cho trời. Gói bánh ngày Tết là dịp cả nhà sum vầy, kể chuyện năm cũ và chuẩn bị đón năm mới."
+          data-img="anh/goibanh.jpg"
+        >
           <img class="card-img" src="anh/goibanh.jpg" alt="Gói bánh chưng" />
           <div class="card-content">
             <h3>Gói bánh chưng</h3>
@@ -121,14 +196,28 @@
             </p>
           </div>
         </div>
-        <div class="card">
+        <!-- Card 4 -->
+        <div
+          class="card"
+          data-title="Lì xì"
+          data-desc="Phong bao đỏ may mắn dành tặng trẻ nhỏ và người lớn tuổi."
+          data-detail="Lì xì (mừng tuổi) là tục lệ trao những phong bao đỏ với tiền mới, tượng trưng cho lời chúc may mắn, sức khỏe và tài lộc đầu năm."
+          data-img="anh/lixi.jpg"
+        >
           <img class="card-img" src="anh/lixi.jpg" alt="Lì xì" />
           <div class="card-content">
             <h3>Lì xì</h3>
             <p>Phong bao đỏ may mắn dành tặng trẻ nhỏ và người lớn tuổi.</p>
           </div>
         </div>
-        <div class="card">
+        <!-- Card 5 -->
+        <div
+          class="card"
+          data-title="Chúc Tết"
+          data-desc="Những câu chúc an khang, thịnh vượng gửi đến người thân, bạn bè."
+          data-detail="Chúc Tết là nét đẹp văn hóa ngày xuân, những lời chúc tốt đẹp như 'An khang thịnh vượng', 'Vạn sự như ý' được gửi gắm đến mọi người."
+          data-img="anh/chuctet.jpg"
+        >
           <img class="card-img" src="anh/chuctet.jpg" alt="Chúc Tết" />
           <div class="card-content">
             <h3>Chúc Tết</h3>
@@ -143,7 +232,14 @@
     <section id="mon-an" class="container">
       <h2 class="section-title">Món ăn truyền thống</h2>
       <div class="card-grid">
-        <div class="card">
+        <!-- Card 1 -->
+        <div
+          class="card"
+          data-title="Bánh chưng, bánh tét"
+          data-desc="Tượng trưng cho đất (bánh chưng) và trời (bánh tét), không thể thiếu ngày Tết."
+          data-detail="Bánh chưng và bánh tét được làm từ gạo nếp, đỗ xanh, thịt lợn, gói trong lá dong hoặc lá chuối. Đây là món ăn truyền thống không thể thiếu trên bàn thờ tổ tiên."
+          data-img="anh/banhchungbanhtet.jpg"
+        >
           <img
             class="card-img"
             src="anh/banhchungbanhtet.jpg"
@@ -157,7 +253,14 @@
             </p>
           </div>
         </div>
-        <div class="card">
+        <!-- Card 2 -->
+        <div
+          class="card"
+          data-title="Thịt kho trứng"
+          data-desc="Món ăn đặc trưng miền Nam, thịt mềm béo ngậy cùng trứng vịt."
+          data-detail="Thịt kho trứng (thịt kho tàu) là món ăn phổ biến ngày Tết ở miền Nam, thịt ba chỉ kho cùng trứng vịt với nước dừa, tạo vị béo ngậy, đậm đà."
+          data-img="https://images.unsplash.com/photo-1582234372722-50d7ccc30ebd?auto=format&fit=crop&w=600&q=80"
+        >
           <img
             class="card-img"
             src="https://images.unsplash.com/photo-1582234372722-50d7ccc30ebd?auto=format&fit=crop&w=600&q=80"
@@ -168,14 +271,28 @@
             <p>Món ăn đặc trưng miền Nam, thịt mềm béo ngậy cùng trứng vịt.</p>
           </div>
         </div>
-        <div class="card">
+        <!-- Card 3 -->
+        <div
+          class="card"
+          data-title="Dưa hành, củ kiệu"
+          data-desc="Ăn kèm với bánh chưng, thịt mỡ để cân bằng vị giác."
+          data-detail="Dưa hành và củ kiệu muối chua cay, giòn, ăn kèm với bánh chưng, thịt mỡ giúp không ngán và kích thích vị giác."
+          data-img="anh/duahanh.jpg"
+        >
           <img class="card-img" src="anh/duahanh.jpg" alt="Dưa hành" />
           <div class="card-content">
             <h3>Dưa hành, củ kiệu</h3>
             <p>Ăn kèm với bánh chưng, thịt mỡ để cân bằng vị giác.</p>
           </div>
         </div>
-        <div class="card">
+        <!-- Card 4 -->
+        <div
+          class="card"
+          data-title="Mứt Tết"
+          data-desc="Mứt dừa, mứt gừng, mứt sen... ngọt ngào đãi khách."
+          data-detail="Mứt Tết là các loại trái cây, củ, hạt được sên với đường, dùng để đãi khách trong những ngày đầu năm."
+          data-img="anh/muttet.jpg"
+        >
           <img class="card-img" src="anh/muttet.jpg" alt="Mứt Tết" />
           <div class="card-content">
             <h3>Mứt Tết</h3>
@@ -188,28 +305,56 @@
     <section id="le-hoi" class="container">
       <h2 class="section-title">Lễ hội ngày Tết</h2>
       <div class="card-grid">
-        <div class="card">
+        <!-- Card 1 -->
+        <div
+          class="card"
+          data-title="Lễ hội chùa"
+          data-desc="Đi chùa đầu năm cầu may mắn, bình an cho gia đình."
+          data-detail="Đi chùa đầu năm là nét đẹp tâm linh, người dân đến chùa lễ Phật, cầu bình an, may mắn và xin chữ đầu năm."
+          data-img="anh/CHUACHIEN.JPG"
+        >
           <img class="card-img" src="anh/CHUACHIEN.JPG" alt="Chùa chiền" />
           <div class="card-content">
             <h3>Lễ hội chùa</h3>
             <p>Đi chùa đầu năm cầu may mắn, bình an cho gia đình.</p>
           </div>
         </div>
-        <div class="card">
+        <!-- Card 2 -->
+        <div
+          class="card"
+          data-title="Múa lân"
+          data-desc="Màn múa lân sôi động xua đuổi tà ma, đem lại phước lành."
+          data-detail="Múa lân thường diễn ra vào dịp Tết, với những màn biểu diễn đẹp mắt, tiếng trống rộn ràng, mang ý nghĩa xua đuổi tà khí và mang lại may mắn."
+          data-img="anh/mualan.jpg"
+        >
           <img class="card-img" src="anh/mualan.jpg" alt="Múa lân" />
           <div class="card-content">
             <h3>Múa lân</h3>
             <p>Màn múa lân sôi động xua đuổi tà ma, đem lại phước lành.</p>
           </div>
         </div>
-        <div class="card">
+        <!-- Card 3 -->
+        <div
+          class="card"
+          data-title="Chợ Tết"
+          data-desc="Chợ hoa, chợ phiên rực rỡ sắc màu ngày xuân."
+          data-detail="Chợ Tết là nơi mua sắm tấp nập, bày bán hoa, cây cảnh, bánh mứt, đồ trang trí, tạo không khí rộn ràng những ngày giáp Tết."
+          data-img="anh/chotet.jpg"
+        >
           <img class="card-img" src="anh/chotet.jpg" alt="Chợ Tết" />
           <div class="card-content">
             <h3>Chợ Tết</h3>
             <p>Chợ hoa, chợ phiên rực rỡ sắc màu ngày xuân.</p>
           </div>
         </div>
-        <div class="card">
+        <!-- Card 4 -->
+        <div
+          class="card"
+          data-title="Hội xuân"
+          data-desc="Các trò chơi dân gian như đu quay, ném còn, hát quan họ."
+          data-detail="Hội xuân diễn ra ở nhiều địa phương với các trò chơi dân gian, hát hò, góp phần gìn giữ bản sắc văn hóa và tạo không khí vui tươi."
+          data-img="https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=600&q=80"
+        >
           <img
             class="card-img"
             src="https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=600&q=80"

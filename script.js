@@ -36,31 +36,27 @@
   function createPetal() {
     const petal = document.createElement("div");
     petal.className = "petal";
-    // Kích thước ngẫu nhiên
     const size = Math.random() * 15 + 12; // 12-27px
     petal.style.width = size + "px";
     petal.style.height = size * 1.2 + "px";
     petal.style.left = Math.random() * 100 + "%";
     petal.style.animationDuration = Math.random() * 4 + 5 + "s"; // 5-9s
-    petal.style.animationDelay = Math.random() * -10 + "s"; // trải đều
+    petal.style.animationDelay = Math.random() * -10 + "s";
     petal.style.background = `linear-gradient(145deg, #ffb7c5, #ff8da${Math.floor(Math.random() * 5 + 1)})`;
     petal.style.opacity = Math.random() * 0.6 + 0.3;
     petalContainer.appendChild(petal);
 
-    // Tự động xóa sau khi rơi xong (phòng trường hợp tích tụ)
     setTimeout(() => {
       if (petal.parentNode) petal.remove();
     }, 15000);
   }
 
-  // Tạo mỗi 400ms một cánh hoa mới, duy trì khoảng 25 cánh cùng lúc
   setInterval(() => {
     if (petalContainer.children.length < PETAL_COUNT * 1.5) {
       createPetal();
     }
   }, 350);
 
-  // Tạo sẵn vài cánh ban đầu
   for (let i = 0; i < PETAL_COUNT; i++) {
     setTimeout(createPetal, i * 150);
   }
@@ -69,9 +65,7 @@
   const logo = document.getElementById("logo-title");
   const header = document.getElementById("main-header");
 
-  // Danh sách các hiệu ứng
   const effects = [
-    // 0: Bùng nổ cánh hoa (tạo nhanh 15 cánh)
     function burstPetals() {
       for (let i = 0; i < 18; i++) {
         setTimeout(() => {
@@ -79,7 +73,7 @@
           p.className = "petal";
           p.style.width = Math.random() * 20 + 10 + "px";
           p.style.height = Math.random() * 25 + 12 + "px";
-          p.style.left = 50 + (Math.random() - 0.5) * 30 + "%"; // quanh giữa
+          p.style.left = 50 + (Math.random() - 0.5) * 30 + "%";
           p.style.animationDuration = Math.random() * 2 + 3 + "s";
           p.style.background = `linear-gradient(145deg, #ffb7c5, #ff6f91)`;
           p.style.opacity = 0.9;
@@ -91,31 +85,27 @@
       }
       showToast("🌸 Rộn ràng hoa đào!");
     },
-    // 1: Đổi màu header thành vàng kim trong 2 giây
     function goldHeader() {
       header.classList.add("header-gold");
       setTimeout(() => header.classList.remove("header-gold"), 2000);
       showToast("✨ Header lấp lánh!");
     },
-    // 2: Rung lắc tiêu đề
     function shakeTitle() {
       logo.classList.add("shake");
       setTimeout(() => logo.classList.remove("shake"), 600);
       showToast("🎋 Lắc xì tiền vàng!");
     },
-    // 3: Thay đổi tốc độ rơi của cánh hoa (tạm thời tăng tốc)
     function speedUpPetals() {
       const petals = document.querySelectorAll(".petal");
       petals.forEach((p) => {
         const oldDur = p.style.animationDuration;
-        p.style.animationDuration = parseFloat(oldDur) * 0.5 + "s"; // nhanh gấp đôi
+        p.style.animationDuration = parseFloat(oldDur) * 0.5 + "s";
         setTimeout(() => {
           p.style.animationDuration = oldDur;
         }, 3000);
       });
       showToast("🌀 Hoa rơi nhanh hơn!");
     },
-    // 4: Hiện lời chúc ngẫu nhiên
     function randomGreeting() {
       const greetings = [
         "Chúc mừng năm mới! 🧧",
@@ -127,7 +117,6 @@
       const msg = greetings[Math.floor(Math.random() * greetings.length)];
       showToast(msg);
     },
-    // 5: Tạm dừng hoa rơi 2 giây
     function pausePetals() {
       document.body.classList.add("pause-petals");
       setTimeout(() => document.body.classList.remove("pause-petals"), 2000);
@@ -145,11 +134,72 @@
 
   logo.addEventListener("click", (e) => {
     e.stopPropagation();
-    // Chọn hiệu ứng ngẫu nhiên
     const randomEffect = effects[Math.floor(Math.random() * effects.length)];
     randomEffect();
-    // Phóng to nhẹ khi click
     logo.style.transform = "scale(1.1)";
     setTimeout(() => (logo.style.transform = ""), 200);
+  });
+
+  // ===== MODAL POPUP CHO CARD =====
+  const modal = document.getElementById("cardModal");
+  const modalImg = document.getElementById("modalImage");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalDesc = document.getElementById("modalDesc");
+  const modalDetail = document.getElementById("modalDetail");
+  const closeModal = document.querySelector(".close-modal");
+
+  const cards = document.querySelectorAll(".card");
+  cards.forEach((card) => {
+    card.addEventListener("click", function (e) {
+      const title = this.dataset.title;
+      const desc = this.dataset.desc;
+      const detail = this.dataset.detail;
+      const img = this.dataset.img;
+
+      modalImg.src = img;
+      modalTitle.textContent = title;
+      modalDesc.textContent = desc;
+      modalDetail.textContent = detail;
+
+      modal.style.display = "flex";
+    });
+  });
+
+  closeModal.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+
+  window.addEventListener("click", function (e) {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  // ===== MUSIC CONTROL =====
+  const music = document.getElementById("backgroundMusic");
+  const musicToggle = document.getElementById("musicToggle");
+  const musicStatus = document.getElementById("musicStatus");
+  let isPlaying = false;
+
+  music.volume = 0.4;
+
+  musicToggle.addEventListener("click", function () {
+    if (isPlaying) {
+      music.pause();
+      musicStatus.textContent = "Bật nhạc";
+      musicToggle.classList.remove("playing");
+    } else {
+      music
+        .play()
+        .then(() => {
+          musicStatus.textContent = "Tắt nhạc";
+          musicToggle.classList.add("playing");
+        })
+        .catch((error) => {
+          console.log("Không thể phát nhạc:", error);
+          alert("Vui lòng tương tác với trang để phát nhạc.");
+        });
+    }
+    isPlaying = !isPlaying;
   });
 })();

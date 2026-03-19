@@ -153,40 +153,80 @@ nav ul li a:hover {
   }
 }
 
-/* Banner (Hero) */
+/* HERO SECTION WITH VIDEO BACKGROUND */
 .hero {
+  position: relative;
   height: 85vh;
-  background:
-    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=1350&q=80")
-      center/cover no-repeat;
+  overflow: hidden;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  text-align: center;
+  justify-content: center;
   color: white;
-  padding: 0 1rem;
 }
 
-.hero h2 {
+.video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.hero-fallback {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none; /* chỉ hiển thị nếu video không hoạt động */
+}
+
+/* Nếu trình duyệt không hỗ trợ video, hiển thị ảnh fallback */
+video:not(:first-child) + .hero-fallback {
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5));
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 1rem;
+  max-width: 900px;
+  animation: fadeInUp 1s ease;
+}
+
+.hero-content h2 {
   font-size: 4rem;
   font-family: "Dancing Script", cursive;
   color: var(--gold);
   text-shadow: 4px 4px 0 #5c2b2b;
   margin-bottom: 1rem;
-  animation: fadeInDown 1s ease;
 }
 
-.hero p {
+.hero-content p {
   font-size: 1.5rem;
-  max-width: 800px;
   background: rgba(0, 0, 0, 0.3);
   padding: 0.8rem 2rem;
   border-radius: 50px;
   backdrop-filter: blur(4px);
   font-weight: 300;
-  animation: fadeInUp 1s ease 0.3s both;
+  display: inline-block;
 }
 
 @keyframes fadeInDown {
@@ -235,6 +275,7 @@ nav ul li a:hover {
   opacity: 0;
   transform: translateY(30px);
   animation: fadeInUp 0.6s ease forwards;
+  cursor: pointer;
 }
 
 .card:nth-child(2) {
@@ -502,12 +543,149 @@ footer .year {
   animation-play-state: paused;
 }
 
+/* ===== MODAL STYLES ===== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  align-items: center;
+  justify-content: center;
+  animation: fadeInModal 0.3s;
+}
+
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background-color: #fef9e7;
+  margin: auto;
+  padding: 2rem;
+  border-radius: 30px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 3px solid var(--gold);
+  animation: slideUpModal 0.4s;
+}
+
+@keyframes slideUpModal {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-content img {
+  width: 100%;
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+  border: 4px solid var(--red);
+}
+
+.modal-content h3 {
+  color: var(--dark-red);
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  font-family: "Dancing Script", cursive;
+}
+
+.modal-content p {
+  color: #2c1810;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--red);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.close-modal:hover {
+  transform: scale(1.2);
+  color: var(--dark-red);
+}
+
+/* Music control */
+.music-control {
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  z-index: 10000;
+}
+
+.music-btn {
+  background-color: var(--gold);
+  color: var(--dark-red);
+  border: none;
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 1rem;
+}
+
+.music-btn i {
+  font-size: 1.3rem;
+}
+
+.music-btn:hover {
+  background-color: var(--red);
+  color: white;
+  transform: scale(1.05);
+}
+
+.music-btn.playing {
+  background-color: var(--dark-red);
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .music-control {
+    bottom: 90px;
+    right: 15px;
+  }
+  .music-btn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+
 /* Responsive */
 @media (max-width: 600px) {
-  .hero h2 {
+  .hero-content h2 {
     font-size: 2.8rem;
   }
-  .hero p {
+  .hero-content p {
     font-size: 1.2rem;
   }
   .section-title {
