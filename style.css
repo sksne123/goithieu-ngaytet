@@ -1,0 +1,516 @@
+/* Reset & base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: "Quicksand", sans-serif;
+  background-color: #fff9f0;
+  color: #2c1810;
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+:root {
+  --red: #b31b1b;
+  --gold: #f5b342;
+  --dark-red: #8b0000;
+  --light-gold: #fae7b3;
+  --petal-pink: #ffb7c5;
+  --petal-light: #ffd1dc;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: var(--dark-red);
+  position: relative;
+}
+.section-title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: var(--gold);
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+}
+
+/* Header */
+header {
+  background-color: var(--red);
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 0.8rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.4s ease;
+}
+
+.logo h1 {
+  font-family: "Dancing Script", cursive;
+  font-size: 2.2rem;
+  color: var(--gold);
+  text-shadow: 2px 2px 0 #5a2e2e;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    text-shadow 0.2s;
+  user-select: none;
+}
+.logo h1:active {
+  transform: scale(0.95);
+}
+
+/* Hiệu ứng rung lắc */
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(10px);
+  }
+  60% {
+    transform: translateX(-5px);
+  }
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+/* Thay đổi màu header tạm thời */
+.header-gold {
+  background-color: #c98f2d !important;
+  transition: background-color 0.3s;
+}
+
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  gap: 0.2rem;
+}
+
+nav ul li a {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 40px;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+nav ul li a:hover {
+  background-color: var(--gold);
+  color: var(--dark-red);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 850px) {
+  header {
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+  nav ul {
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+  nav ul li a {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Banner (Hero) */
+.hero {
+  height: 85vh;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=1350&q=80")
+      center/cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  padding: 0 1rem;
+}
+
+.hero h2 {
+  font-size: 4rem;
+  font-family: "Dancing Script", cursive;
+  color: var(--gold);
+  text-shadow: 4px 4px 0 #5c2b2b;
+  margin-bottom: 1rem;
+  animation: fadeInDown 1s ease;
+}
+
+.hero p {
+  font-size: 1.5rem;
+  max-width: 800px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  backdrop-filter: blur(4px);
+  font-weight: 300;
+  animation: fadeInUp 1s ease 0.3s both;
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+/* Cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(179, 27, 27, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(245, 179, 66, 0.3);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.card:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.card:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(179, 27, 27, 0.2);
+  border-color: var(--gold);
+}
+
+.card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 4px solid var(--gold);
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.card-content h3 {
+  color: var(--red);
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.card-content p {
+  color: #4a2e1e;
+  font-weight: 400;
+}
+
+.intro-text {
+  font-size: 1.2rem;
+  background: var(--light-gold);
+  padding: 2.5rem;
+  border-radius: 30px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  border-left: 8px solid var(--red);
+  max-width: 900px;
+  margin: 2rem auto;
+}
+
+.origin-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  align-items: center;
+}
+
+.origin-content div {
+  flex: 1 1 300px;
+}
+
+.origin-content img {
+  width: 100%;
+  border-radius: 30px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Thư viện ảnh */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  aspect-ratio: 1/1;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.1);
+}
+
+.gallery-item::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    rgba(179, 27, 27, 0.2),
+    rgba(245, 179, 66, 0.2)
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.gallery-item:hover::after {
+  opacity: 1;
+}
+
+/* Footer */
+footer {
+  background: var(--dark-red);
+  color: white;
+  text-align: center;
+  padding: 2rem;
+  margin-top: 3rem;
+  font-size: 1.1rem;
+}
+
+footer p:first-child {
+  font-family: "Dancing Script", cursive;
+  font-size: 2rem;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+footer .year {
+  font-weight: bold;
+  color: var(--gold);
+}
+
+/* Hiệu ứng fade-in khi scroll */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Nút back to top */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: var(--gold);
+  color: var(--dark-red);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 99;
+}
+
+.back-to-top.show {
+  opacity: 1;
+}
+
+/* Petal container */
+#petal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.petal {
+  position: absolute;
+  background: linear-gradient(145deg, #ffb7c5, #ff8da1);
+  border-radius: 150% 0 150% 0;
+  width: 18px;
+  height: 18px;
+  opacity: 0.7;
+  filter: drop-shadow(0 0 2px rgba(255, 140, 170, 0.5));
+  animation: fall linear infinite;
+  transform: rotate(45deg);
+}
+
+.petal::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 200, 0.6);
+  border-radius: 50%;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-20vh) rotate(0deg) scale(0.8);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(120vh) rotate(720deg) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Lời chúc tạm thời */
+.greeting-toast {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gold);
+  color: var(--dark-red);
+  padding: 10px 25px;
+  border-radius: 50px;
+  font-weight: bold;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+  animation: slideDownFade 2s ease forwards;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+@keyframes slideDownFade {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  15% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  85% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+}
+
+/* Tạm dừng petal */
+.pause-petals .petal {
+  animation-play-state: paused;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .hero h2 {
+    font-size: 2.8rem;
+  }
+  .hero p {
+    font-size: 1.2rem;
+  }
+  .section-title {
+    font-size: 2rem;
+  }
+}
