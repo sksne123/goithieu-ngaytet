@@ -29,23 +29,22 @@
   );
   fadeElements.forEach((el) => observer.observe(el));
 
-  // ===== PETAL FALL EFFECT (HOA ĐÀO RƠI) =====
+  // ===== PETAL FALL EFFECT =====
   const petalContainer = document.getElementById("petal-container");
-  const PETAL_COUNT = 25; // số cánh hoa cùng lúc
+  const PETAL_COUNT = 25;
 
   function createPetal() {
     const petal = document.createElement("div");
     petal.className = "petal";
-    const size = Math.random() * 15 + 12; // 12-27px
+    const size = Math.random() * 15 + 12;
     petal.style.width = size + "px";
     petal.style.height = size * 1.2 + "px";
     petal.style.left = Math.random() * 100 + "%";
-    petal.style.animationDuration = Math.random() * 4 + 5 + "s"; // 5-9s
+    petal.style.animationDuration = Math.random() * 4 + 5 + "s";
     petal.style.animationDelay = Math.random() * -10 + "s";
     petal.style.background = `linear-gradient(145deg, #ffb7c5, #ff8da${Math.floor(Math.random() * 5 + 1)})`;
     petal.style.opacity = Math.random() * 0.6 + 0.3;
     petalContainer.appendChild(petal);
-
     setTimeout(() => {
       if (petal.parentNode) petal.remove();
     }, 15000);
@@ -56,7 +55,6 @@
       createPetal();
     }
   }, 350);
-
   for (let i = 0; i < PETAL_COUNT; i++) {
     setTimeout(createPetal, i * 150);
   }
@@ -168,7 +166,6 @@
   closeModal.addEventListener("click", function () {
     modal.style.display = "none";
   });
-
   window.addEventListener("click", function (e) {
     if (e.target === modal) {
       modal.style.display = "none";
@@ -181,25 +178,151 @@
   const musicStatus = document.getElementById("musicStatus");
   let isPlaying = false;
 
-  music.volume = 0.4;
+  if (music && musicToggle) {
+    music.volume = 0.4;
+    musicToggle.addEventListener("click", function () {
+      if (isPlaying) {
+        music.pause();
+        musicStatus.textContent = "Bật nhạc";
+        musicToggle.classList.remove("playing");
+      } else {
+        music
+          .play()
+          .then(() => {
+            musicStatus.textContent = "Tắt nhạc";
+            musicToggle.classList.add("playing");
+          })
+          .catch((error) => {
+            console.log("Không thể phát nhạc:", error);
+            alert("Vui lòng tương tác với trang để phát nhạc.");
+          });
+      }
+      isPlaying = !isPlaying;
+    });
+  }
 
-  musicToggle.addEventListener("click", function () {
-    if (isPlaying) {
-      music.pause();
-      musicStatus.textContent = "Bật nhạc";
-      musicToggle.classList.remove("playing");
+  // ===== VIDEO SOUND CONTROL =====
+  const heroVideo = document.getElementById("heroVideo");
+  const videoSoundBtn = document.getElementById("videoSoundBtn");
+  let videoSoundOn = false;
+
+  if (heroVideo && videoSoundBtn) {
+    videoSoundBtn.addEventListener("click", function () {
+      if (videoSoundOn) {
+        heroVideo.muted = true;
+        videoSoundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+      } else {
+        heroVideo.muted = false;
+        videoSoundBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+        heroVideo.play();
+      }
+      videoSoundOn = !videoSoundOn;
+    });
+  }
+
+  // ===== ĐÓNG GÓP Ý KIẾN =====
+  let feedbacks = [];
+  const commentsContainer = document.getElementById("commentsContainer");
+  const feedbackForm = document.getElementById("feedbackForm");
+
+  function loadFeedbacks() {
+    const stored = localStorage.getItem("tet_feedbacks");
+    if (stored) {
+      feedbacks = JSON.parse(stored);
     } else {
-      music
-        .play()
-        .then(() => {
-          musicStatus.textContent = "Tắt nhạc";
-          musicToggle.classList.add("playing");
-        })
-        .catch((error) => {
-          console.log("Không thể phát nhạc:", error);
-          alert("Vui lòng tương tác với trang để phát nhạc.");
-        });
+      feedbacks = [
+        {
+          name: "Nguyễn Thị Hoa",
+          email: "hoa@example.com",
+          comment:
+            "Trang web rất đẹp, đúng không khí Tết! Cảm ơn nhóm đã thực hiện.",
+          date: new Date().toLocaleString(),
+        },
+        {
+          name: "Trần Văn Xuân",
+          email: "xuan@example.com",
+          comment:
+            "Phần video nền và hoa đào rơi rất ấn tượng. Chúc mừng năm mới!",
+          date: new Date().toLocaleString(),
+        },
+      ];
+      saveFeedbacks();
     }
-    isPlaying = !isPlaying;
-  });
+    renderFeedbacks();
+  }
+
+  function saveFeedbacks() {
+    localStorage.setItem("tet_feedbacks", JSON.stringify(feedbacks));
+  }
+
+  function escapeHtml(str) {
+    if (!str) return "";
+    return str.replace(/[&<>]/g, function (m) {
+      if (m === "&") return "&amp;";
+      if (m === "<") return "&lt;";
+      if (m === ">") return "&gt;";
+      return m;
+    });
+  }
+
+  function renderFeedbacks() {
+    if (!commentsContainer) return;
+    if (feedbacks.length === 0) {
+      commentsContainer.innerHTML =
+        '<div class="empty-comment">Chưa có ý kiến. Hãy là người đầu tiên chia sẻ!</div>';
+      return;
+    }
+    commentsContainer.innerHTML = feedbacks
+      .map(
+        (fb) => `
+      <div class="comment-item">
+        <div class="comment-name">${escapeHtml(fb.name)}</div>
+        ${
+          fb.email
+            ? `<div class="comment-email">📧 ${escapeHtml(fb.email)}</div>`
+            : ""
+        }
+        <div class="comment-text">${escapeHtml(fb.comment).replace(
+          /\n/g,
+          "<br>",
+        )}</div>
+        <div class="comment-date">${fb.date || ""}</div>
+      </div>
+    `,
+      )
+      .join("");
+  }
+
+  if (feedbackForm) {
+    feedbackForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const nameInput = document.getElementById("fbName");
+      const emailInput = document.getElementById("fbEmail");
+      const commentInput = document.getElementById("fbComment");
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const comment = commentInput.value.trim();
+      if (!name || !comment) {
+        alert("Vui lòng nhập họ tên và nội dung ý kiến.");
+        return;
+      }
+      const newFeedback = {
+        name: name,
+        email: email,
+        comment: comment,
+        date: new Date().toLocaleString(),
+      };
+      feedbacks.unshift(newFeedback);
+      saveFeedbacks();
+      renderFeedbacks();
+      feedbackForm.reset();
+      const toast = document.createElement("div");
+      toast.className = "greeting-toast";
+      toast.textContent = "✅ Cảm ơn bạn đã đóng góp ý kiến!";
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2000);
+    });
+  }
+
+  loadFeedbacks();
 })();
