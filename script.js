@@ -1,38 +1,32 @@
 (function () {
-  // Lấy năm hiện tại
+  // Năm hiện tại
   document.getElementById("currentYear").textContent = new Date().getFullYear();
 
   // Back to top
   const backToTop = document.getElementById("backToTop");
   window.addEventListener("scroll", () => {
-    if (window.scrollY > 400) {
-      backToTop.classList.add("show");
-    } else {
-      backToTop.classList.remove("show");
-    }
+    if (window.scrollY > 400) backToTop.classList.add("show");
+    else backToTop.classList.remove("show");
   });
-  backToTop.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
+  backToTop.addEventListener("click", () =>
+    window.scrollTo({ top: 0, behavior: "smooth" }),
+  );
 
-  // Intersection Observer cho fade-in
+  // Fade-in observer
   const fadeElements = document.querySelectorAll(".fade-in");
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-        }
+        if (entry.isIntersecting) entry.target.classList.add("visible");
       });
     },
     { threshold: 0.2 },
   );
   fadeElements.forEach((el) => observer.observe(el));
 
-  // ===== PETAL FALL EFFECT =====
+  // Petal fall effect
   const petalContainer = document.getElementById("petal-container");
   const PETAL_COUNT = 25;
-
   function createPetal() {
     const petal = document.createElement("div");
     petal.className = "petal";
@@ -49,23 +43,17 @@
       if (petal.parentNode) petal.remove();
     }, 15000);
   }
-
   setInterval(() => {
-    if (petalContainer.children.length < PETAL_COUNT * 1.5) {
-      createPetal();
-    }
+    if (petalContainer.children.length < PETAL_COUNT * 1.5) createPetal();
   }, 350);
-  for (let i = 0; i < PETAL_COUNT; i++) {
-    setTimeout(createPetal, i * 150);
-  }
+  for (let i = 0; i < PETAL_COUNT; i++) setTimeout(createPetal, i * 150);
 
-  // ===== HIỆU ỨNG CLICK VÀO TIÊU ĐỀ =====
+  // Click tiêu đề hiệu ứng
   const logo = document.getElementById("logo-title");
   const header = document.getElementById("main-header");
-
   const effects = [
     function burstPetals() {
-      for (let i = 0; i < 18; i++) {
+      for (let i = 0; i < 18; i++)
         setTimeout(() => {
           const p = document.createElement("div");
           p.className = "petal";
@@ -80,7 +68,6 @@
             if (p.parentNode) p.remove();
           }, 5000);
         }, i * 50);
-      }
       showToast("🌸 Rộn ràng hoa đào!");
     },
     function goldHeader() {
@@ -112,8 +99,7 @@
         "Phát tài phát lộc! 💰",
         "Sức khỏe dồi dào! 🍊",
       ];
-      const msg = greetings[Math.floor(Math.random() * greetings.length)];
-      showToast(msg);
+      showToast(greetings[Math.floor(Math.random() * greetings.length)]);
     },
     function pausePetals() {
       document.body.classList.add("pause-petals");
@@ -121,7 +107,6 @@
       showToast("⏸️ Hoa ngừng rơi...");
     },
   ];
-
   function showToast(text) {
     const toast = document.createElement("div");
     toast.className = "greeting-toast";
@@ -129,58 +114,43 @@
     document.body.appendChild(toast);
     setTimeout(() => toast.remove(), 2000);
   }
-
   logo.addEventListener("click", (e) => {
     e.stopPropagation();
-    const randomEffect = effects[Math.floor(Math.random() * effects.length)];
-    randomEffect();
+    effects[Math.floor(Math.random() * effects.length)]();
     logo.style.transform = "scale(1.1)";
     setTimeout(() => (logo.style.transform = ""), 200);
   });
 
-  // ===== MODAL POPUP CHO CARD =====
-  const modal = document.getElementById("cardModal");
-  const modalImg = document.getElementById("modalImage");
-  const modalTitle = document.getElementById("modalTitle");
-  const modalDesc = document.getElementById("modalDesc");
-  const modalDetail = document.getElementById("modalDetail");
-  const closeModal = document.querySelector(".close-modal");
-
-  const cards = document.querySelectorAll(".card");
-  cards.forEach((card) => {
-    card.addEventListener("click", function (e) {
-      const title = this.dataset.title;
-      const desc = this.dataset.desc;
-      const detail = this.dataset.detail;
-      const img = this.dataset.img;
-
-      modalImg.src = img;
-      modalTitle.textContent = title;
-      modalDesc.textContent = desc;
-      modalDetail.textContent = detail;
-
+  // Modal card
+  const modal = document.getElementById("cardModal"),
+    modalImg = document.getElementById("modalImage"),
+    modalTitle = document.getElementById("modalTitle"),
+    modalDesc = document.getElementById("modalDesc"),
+    modalDetail = document.getElementById("modalDetail"),
+    closeModal = document.querySelector("#cardModal .close-modal");
+  document.querySelectorAll(".card").forEach((card) => {
+    card.addEventListener("click", () => {
+      modalImg.src = card.dataset.img;
+      modalTitle.textContent = card.dataset.title;
+      modalDesc.textContent = card.dataset.desc;
+      modalDetail.textContent = card.dataset.detail;
       modal.style.display = "flex";
     });
   });
-
-  closeModal.addEventListener("click", function () {
-    modal.style.display = "none";
-  });
-  window.addEventListener("click", function (e) {
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
+  if (closeModal)
+    closeModal.addEventListener("click", () => (modal.style.display = "none"));
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) modal.style.display = "none";
   });
 
-  // ===== MUSIC CONTROL =====
-  const music = document.getElementById("backgroundMusic");
-  const musicToggle = document.getElementById("musicToggle");
-  const musicStatus = document.getElementById("musicStatus");
+  // Music control
+  const music = document.getElementById("backgroundMusic"),
+    musicToggle = document.getElementById("musicToggle"),
+    musicStatus = document.getElementById("musicStatus");
   let isPlaying = false;
-
   if (music && musicToggle) {
     music.volume = 0.4;
-    musicToggle.addEventListener("click", function () {
+    musicToggle.addEventListener("click", () => {
       if (isPlaying) {
         music.pause();
         musicStatus.textContent = "Bật nhạc";
@@ -192,22 +162,18 @@
             musicStatus.textContent = "Tắt nhạc";
             musicToggle.classList.add("playing");
           })
-          .catch((error) => {
-            console.log("Không thể phát nhạc:", error);
-            alert("Vui lòng tương tác với trang để phát nhạc.");
-          });
+          .catch(() => alert("Vui lòng tương tác với trang để phát nhạc."));
       }
       isPlaying = !isPlaying;
     });
   }
 
-  // ===== VIDEO SOUND CONTROL =====
-  const heroVideo = document.getElementById("heroVideo");
-  const videoSoundBtn = document.getElementById("videoSoundBtn");
+  // Video sound
+  const heroVideo = document.getElementById("heroVideo"),
+    videoSoundBtn = document.getElementById("videoSoundBtn");
   let videoSoundOn = false;
-
   if (heroVideo && videoSoundBtn) {
-    videoSoundBtn.addEventListener("click", function () {
+    videoSoundBtn.addEventListener("click", () => {
       if (videoSoundOn) {
         heroVideo.muted = true;
         videoSoundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
@@ -220,29 +186,24 @@
     });
   }
 
-  // ===== ĐÓNG GÓP Ý KIẾN =====
+  // ===== FEEDBACK MODAL =====
   let feedbacks = [];
-  const commentsContainer = document.getElementById("commentsContainer");
-  const feedbackForm = document.getElementById("feedbackForm");
-
+  const storageKey = "tet_feedbacks_final";
   function loadFeedbacks() {
-    const stored = localStorage.getItem("tet_feedbacks");
-    if (stored) {
-      feedbacks = JSON.parse(stored);
-    } else {
+    const stored = localStorage.getItem(storageKey);
+    if (stored) feedbacks = JSON.parse(stored);
+    else {
       feedbacks = [
         {
           name: "Nguyễn Thị Hoa",
           email: "hoa@example.com",
-          comment:
-            "Trang web rất đẹp, đúng không khí Tết! Cảm ơn nhóm đã thực hiện.",
+          comment: "Trang web rất đẹp, đúng không khí Tết!",
           date: new Date().toLocaleString(),
         },
         {
           name: "Trần Văn Xuân",
           email: "xuan@example.com",
-          comment:
-            "Phần video nền và hoa đào rơi rất ấn tượng. Chúc mừng năm mới!",
+          comment: "Phần video nền và hoa đào rơi rất ấn tượng.",
           date: new Date().toLocaleString(),
         },
       ];
@@ -250,79 +211,102 @@
     }
     renderFeedbacks();
   }
-
   function saveFeedbacks() {
-    localStorage.setItem("tet_feedbacks", JSON.stringify(feedbacks));
+    localStorage.setItem(storageKey, JSON.stringify(feedbacks));
   }
-
   function escapeHtml(str) {
     if (!str) return "";
-    return str.replace(/[&<>]/g, function (m) {
-      if (m === "&") return "&amp;";
-      if (m === "<") return "&lt;";
-      if (m === ">") return "&gt;";
-      return m;
-    });
+    return str.replace(
+      /[&<>]/g,
+      (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[m],
+    );
   }
-
   function renderFeedbacks() {
-    if (!commentsContainer) return;
+    const container = document.getElementById("commentsContainerModal");
+    if (!container) return;
     if (feedbacks.length === 0) {
-      commentsContainer.innerHTML =
-        '<div class="empty-comment">Chưa có ý kiến. Hãy là người đầu tiên chia sẻ!</div>';
+      container.innerHTML =
+        '<div class="empty-msg">Chưa có ý kiến. Hãy là người đầu tiên chia sẻ!</div>';
       return;
     }
-    commentsContainer.innerHTML = feedbacks
+    container.innerHTML = feedbacks
       .map(
         (fb) => `
       <div class="comment-item">
         <div class="comment-name">${escapeHtml(fb.name)}</div>
-        ${
-          fb.email
-            ? `<div class="comment-email">📧 ${escapeHtml(fb.email)}</div>`
-            : ""
-        }
-        <div class="comment-text">${escapeHtml(fb.comment).replace(
-          /\n/g,
-          "<br>",
-        )}</div>
+        ${fb.email ? `<div style="font-size:0.8rem; color:#888;">📧 ${escapeHtml(fb.email)}</div>` : ""}
+        <div style="margin-top:5px;">${escapeHtml(fb.comment).replace(/\n/g, "<br>")}</div>
         <div class="comment-date">${fb.date || ""}</div>
       </div>
     `,
       )
       .join("");
   }
-
+  const feedbackForm = document.getElementById("feedbackFormModal");
   if (feedbackForm) {
-    feedbackForm.addEventListener("submit", function (e) {
+    feedbackForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      const nameInput = document.getElementById("fbName");
-      const emailInput = document.getElementById("fbEmail");
-      const commentInput = document.getElementById("fbComment");
-      const name = nameInput.value.trim();
-      const email = emailInput.value.trim();
-      const comment = commentInput.value.trim();
+      const name = document.getElementById("fbNameModal").value.trim();
+      const email = document.getElementById("fbEmailModal").value.trim();
+      const comment = document.getElementById("fbCommentModal").value.trim();
       if (!name || !comment) {
         alert("Vui lòng nhập họ tên và nội dung ý kiến.");
         return;
       }
-      const newFeedback = {
-        name: name,
-        email: email,
-        comment: comment,
+      feedbacks.unshift({
+        name,
+        email,
+        comment,
         date: new Date().toLocaleString(),
-      };
-      feedbacks.unshift(newFeedback);
+      });
       saveFeedbacks();
       renderFeedbacks();
       feedbackForm.reset();
       const toast = document.createElement("div");
       toast.className = "greeting-toast";
-      toast.textContent = "✅ Cảm ơn bạn đã đóng góp ý kiến!";
+      toast.textContent = "✅ Cảm ơn bạn đã đóng góp!";
       document.body.appendChild(toast);
       setTimeout(() => toast.remove(), 2000);
     });
   }
-
+  const feedbackModal = document.getElementById("feedbackModal");
+  const openFeedbackBtn = document.getElementById("openFeedbackBtn");
+  const closeFeedbackBtn = document.querySelector(
+    "#feedbackModal .close-feedback",
+  );
+  if (openFeedbackBtn) {
+    openFeedbackBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (feedbackModal) feedbackModal.style.display = "flex";
+    });
+  }
+  if (closeFeedbackBtn)
+    closeFeedbackBtn.addEventListener("click", () => {
+      if (feedbackModal) feedbackModal.style.display = "none";
+    });
+  window.addEventListener("click", (e) => {
+    if (e.target === feedbackModal) feedbackModal.style.display = "none";
+  });
   loadFeedbacks();
+
+  // ===== ACTIVE MENU + SOFT PULSE =====
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll("nav ul li a[data-nav]");
+  function setActiveNav() {
+    let scrollPos = window.scrollY + 150;
+    let current = "";
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop;
+      const sectionBottom = sectionTop + section.offsetHeight;
+      if (scrollPos >= sectionTop && scrollPos < sectionBottom)
+        current = section.getAttribute("id");
+    });
+    navLinks.forEach((link) => {
+      link.classList.remove("active");
+      if (link.getAttribute("data-nav") === current)
+        link.classList.add("active");
+    });
+  }
+  window.addEventListener("scroll", setActiveNav);
+  window.addEventListener("load", setActiveNav);
 })();

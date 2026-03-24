@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tết Nguyên Đán Việt Nam</title>
-    <!-- Fonts & Icons -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -18,7 +17,7 @@
   <body>
     <div id="petal-container"></div>
 
-    <!-- MODAL POPUP -->
+    <!-- MODAL CARD (chi tiết) -->
     <div id="cardModal" class="modal">
       <div class="modal-content">
         <span class="close-modal">&times;</span>
@@ -26,6 +25,40 @@
         <h3 id="modalTitle"></h3>
         <p id="modalDesc"></p>
         <p id="modalDetail"></p>
+      </div>
+    </div>
+
+    <!-- MODAL ĐÓNG GÓP Ý KIẾN -->
+    <div id="feedbackModal" class="modal feedback-modal">
+      <div class="modal-content feedback-content">
+        <span class="close-modal close-feedback">&times;</span>
+        <h2 style="color: var(--dark-red); margin-bottom: 1rem">
+          💬 Đóng góp ý kiến
+        </h2>
+        <form id="feedbackFormModal">
+          <input
+            type="text"
+            id="fbNameModal"
+            placeholder="Họ tên của bạn"
+            required
+          />
+          <input
+            type="email"
+            id="fbEmailModal"
+            placeholder="Email (không bắt buộc)"
+          />
+          <textarea
+            id="fbCommentModal"
+            rows="3"
+            placeholder="Chia sẻ cảm nhận về Tết hoặc góp ý cho trang web..."
+            required
+          ></textarea>
+          <button type="submit" class="btn-submit">Gửi ý kiến</button>
+        </form>
+        <div id="feedbackListModal">
+          <h3>📝 Ý kiến của mọi người</h3>
+          <div id="commentsContainerModal"></div>
+        </div>
       </div>
     </div>
 
@@ -49,18 +82,18 @@
       </div>
       <nav>
         <ul>
-          <li><a href="#gioi-thieu">Trang chủ</a></li>
-          <li><a href="#nguon-goc">Nguồn gốc</a></li>
-          <li><a href="#phong-tuc">Phong tục</a></li>
-          <li><a href="#mon-an">Món ăn</a></li>
-          <li><a href="#le-hoi">Lễ hội</a></li>
-          <li><a href="#thu-vien">Thư viện</a></li>
-          <li><a href="#dong-gop">Đóng góp</a></li>
+          <li><a href="#gioi-thieu" data-nav="gioi-thieu">Trang chủ</a></li>
+          <li><a href="#nguon-goc" data-nav="nguon-goc">Nguồn gốc</a></li>
+          <li><a href="#phong-tuc" data-nav="phong-tuc">Phong tục</a></li>
+          <li><a href="#mon-an" data-nav="mon-an">Món ăn</a></li>
+          <li><a href="#le-hoi" data-nav="le-hoi">Lễ hội</a></li>
+          <li><a href="#thu-vien" data-nav="thu-vien">Thư viện</a></li>
+          <li><a href="#" id="openFeedbackBtn">Đóng góp</a></li>
         </ul>
       </nav>
     </header>
 
-    <!-- HERO SECTION WITH VIDEO BACKGROUND -->
+    <!-- HERO VIDEO -->
     <section class="hero">
       <div class="video-container">
         <video
@@ -140,7 +173,7 @@
     <section id="phong-tuc" class="container">
       <h2 class="section-title">Phong tục ngày Tết</h2>
       <div class="card-grid">
-        <!-- Card 1 -->
+        <!-- Các card giữ nguyên như cũ (đã có đủ 5 card phong tục) -->
         <div
           class="card"
           data-title="Dọn dẹp nhà cửa"
@@ -157,7 +190,6 @@
             </p>
           </div>
         </div>
-        <!-- Card 2 -->
         <div
           class="card"
           data-title="Cúng ông Công ông Táo"
@@ -177,7 +209,6 @@
             </p>
           </div>
         </div>
-        <!-- Card 3 -->
         <div
           class="card"
           data-title="Gói bánh chưng"
@@ -194,7 +225,6 @@
             </p>
           </div>
         </div>
-        <!-- Card 4 -->
         <div
           class="card"
           data-title="Lì xì"
@@ -208,7 +238,6 @@
             <p>Phong bao đỏ may mắn dành tặng trẻ nhỏ và người lớn tuổi.</p>
           </div>
         </div>
-        <!-- Card 5 -->
         <div
           class="card"
           data-title="Chúc Tết"
@@ -230,7 +259,6 @@
     <section id="mon-an" class="container">
       <h2 class="section-title">Món ăn truyền thống</h2>
       <div class="card-grid">
-        <!-- Card 1 -->
         <div
           class="card"
           data-title="Bánh chưng, bánh tét"
@@ -251,7 +279,6 @@
             </p>
           </div>
         </div>
-        <!-- Card 2 -->
         <div
           class="card"
           data-title="Thịt kho trứng"
@@ -269,7 +296,6 @@
             <p>Món ăn đặc trưng miền Nam, thịt mềm béo ngậy cùng trứng vịt.</p>
           </div>
         </div>
-        <!-- Card 3 -->
         <div
           class="card"
           data-title="Dưa hành, củ kiệu"
@@ -283,7 +309,6 @@
             <p>Ăn kèm với bánh chưng, thịt mỡ để cân bằng vị giác.</p>
           </div>
         </div>
-        <!-- Card 4 -->
         <div
           class="card"
           data-title="Mứt Tết"
@@ -303,7 +328,6 @@
     <section id="le-hoi" class="container">
       <h2 class="section-title">Lễ hội ngày Tết</h2>
       <div class="card-grid">
-        <!-- Card 1 -->
         <div
           class="card"
           data-title="Lễ hội chùa"
@@ -317,7 +341,6 @@
             <p>Đi chùa đầu năm cầu may mắn, bình an cho gia đình.</p>
           </div>
         </div>
-        <!-- Card 2 -->
         <div
           class="card"
           data-title="Múa lân"
@@ -331,7 +354,6 @@
             <p>Màn múa lân sôi động xua đuổi tà ma, đem lại phước lành.</p>
           </div>
         </div>
-        <!-- Card 3 -->
         <div
           class="card"
           data-title="Chợ Tết"
@@ -345,7 +367,6 @@
             <p>Chợ hoa, chợ phiên rực rỡ sắc màu ngày xuân.</p>
           </div>
         </div>
-        <!-- Card 4 -->
         <div
           class="card"
           data-title="Hội xuân"
@@ -384,42 +405,31 @@
       </div>
     </section>
 
-    <!-- ===== ĐÓNG GÓP Ý KIẾN ===== -->
-    <section id="dong-gop" class="container">
-      <h2 class="section-title">💬 Đóng góp ý kiến</h2>
-      <div class="feedback-form">
-        <form id="feedbackForm">
-          <input
-            type="text"
-            id="fbName"
-            placeholder="Họ tên của bạn"
-            required
-          />
-          <input
-            type="email"
-            id="fbEmail"
-            placeholder="Email (không bắt buộc)"
-          />
-          <textarea
-            id="fbComment"
-            rows="4"
-            placeholder="Chia sẻ cảm nhận về Tết hoặc góp ý cho trang web..."
-            required
-          ></textarea>
-          <button type="submit" class="btn-submit">Gửi ý kiến</button>
-        </form>
-        <div id="feedbackList">
-          <h3>📝 Ý kiến của mọi người</h3>
-          <div id="commentsContainer"></div>
-        </div>
-      </div>
-    </section>
-
     <footer>
       <p>Chúc mừng năm mới - An khang thịnh vượng</p>
       <p>
         Website giới thiệu văn hóa Tết Việt Nam &copy;
         <span class="year" id="currentYear"></span>
+      </p>
+      <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8">
+        🎵 Nguồn nhạc:
+        <a
+          href="https://www.youtube.com/watch?v=gOtfJ151ue4"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="color: var(--gold); text-decoration: none"
+          >Focus Entertainment - Youtube</a
+        >
+      </p>
+      <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8">
+        📖 Nguồn thông tin:
+        <a
+          href="https://xaydungchinhsach.chinhphu.vn/nguon-goc-y-nghia-tet-nguyen-dan-cua-nguoi-viet-119230121183831146.htm"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="color: var(--gold); text-decoration: none"
+          >Báo điện tử Chính phủ</a
+        >
       </p>
     </footer>
 

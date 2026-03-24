@@ -4,22 +4,19 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
 }
-
 body {
   font-family: "Quicksand", sans-serif;
-  background-color: #ffdddd;
+  background-color: #fff9f0;
   color: #2c1810;
   line-height: 1.6;
   overflow-x: hidden;
   position: relative;
   min-height: 100vh;
 }
-
 :root {
   --red: #b31b1b;
   --gold: #f5b342;
@@ -28,14 +25,12 @@ body {
   --petal-pink: #ffb7c5;
   --petal-light: #ffd1dc;
 }
-
 h1,
 h2,
 h3 {
   font-family: "Playfair Display", serif;
   font-weight: 700;
 }
-
 .section-title {
   text-align: center;
   font-size: 2.5rem;
@@ -52,8 +47,7 @@ h3 {
   margin: 0.5rem auto 0;
   border-radius: 2px;
 }
-
-/* Header với hiệu ứng đổi màu liên tục */
+/* Header + animation đổi màu */
 header {
   background-color: var(--red);
   color: white;
@@ -69,7 +63,6 @@ header {
   transition: background-color 0.4s ease;
   animation: headerColorShift 8s infinite alternate;
 }
-
 @keyframes headerColorShift {
   0% {
     background-color: #b31b1b;
@@ -87,7 +80,6 @@ header {
     background-color: #8b0000;
   }
 }
-
 .logo h1 {
   font-family: "Dancing Script", cursive;
   font-size: 2.2rem;
@@ -95,15 +87,12 @@ header {
   text-shadow: 2px 2px 0 #5a2e2e;
   letter-spacing: 1px;
   cursor: pointer;
-  transition:
-    transform 0.2s,
-    text-shadow 0.2s;
+  transition: transform 0.2s;
   user-select: none;
 }
 .logo h1:active {
   transform: scale(0.95);
 }
-
 .shake {
   animation: shake 0.5s ease-in-out;
 }
@@ -125,19 +114,16 @@ header {
     transform: translateX(5px);
   }
 }
-
 .header-gold {
   background-color: #c98f2d !important;
   transition: background-color 0.3s;
 }
-
 nav ul {
   display: flex;
   flex-wrap: wrap;
   list-style: none;
   gap: 0.2rem;
 }
-
 nav ul li a {
   display: inline-block;
   padding: 0.5rem 1rem;
@@ -148,13 +134,31 @@ nav ul li a {
   transition: all 0.3s ease;
   font-size: 1rem;
 }
-
 nav ul li a:hover {
   background-color: var(--gold);
   color: var(--dark-red);
   transform: translateY(-2px);
 }
-
+/* HIỆU ỨNG NHẤP NHÁY MỜ NHẠT CHO MENU ĐANG ACTIVE */
+nav ul li a.active {
+  background-color: rgba(245, 179, 66, 0.5);
+  color: #ffdd99;
+  animation: softPulse 1.2s infinite;
+}
+@keyframes softPulse {
+  0% {
+    opacity: 0.7;
+    text-shadow: 0 0 0px rgba(255, 215, 0, 0);
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
+  }
+  100% {
+    opacity: 0.7;
+    text-shadow: 0 0 0px rgba(255, 215, 0, 0);
+  }
+}
 @media (max-width: 850px) {
   header {
     flex-direction: column;
@@ -169,8 +173,7 @@ nav ul li a:hover {
     font-size: 0.9rem;
   }
 }
-
-/* Hero Video */
+/* Hero video */
 .hero {
   position: relative;
   height: 85vh;
@@ -180,7 +183,6 @@ nav ul li a:hover {
   justify-content: center;
   color: white;
 }
-
 .video-container {
   position: absolute;
   top: 0;
@@ -189,21 +191,18 @@ nav ul li a:hover {
   height: 100%;
   z-index: 0;
 }
-
 .hero-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   pointer-events: none;
 }
-
 .hero-fallback {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: none;
 }
-
 .overlay {
   position: absolute;
   top: 0;
@@ -213,7 +212,6 @@ nav ul li a:hover {
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5));
   z-index: 1;
 }
-
 .hero-content {
   position: relative;
   z-index: 2;
@@ -222,7 +220,6 @@ nav ul li a:hover {
   max-width: 900px;
   animation: fadeInUp 1s ease;
 }
-
 .hero-content h2 {
   font-size: 4rem;
   font-family: "Dancing Script", cursive;
@@ -230,7 +227,6 @@ nav ul li a:hover {
   text-shadow: 4px 4px 0 #5c2b2b;
   margin-bottom: 1rem;
 }
-
 .hero-content p {
   font-size: 1.5rem;
   background: rgba(0, 0, 0, 0.3);
@@ -240,7 +236,6 @@ nav ul li a:hover {
   font-weight: 300;
   display: inline-block;
 }
-
 .video-sound-btn {
   position: absolute;
   bottom: 20px;
@@ -248,7 +243,7 @@ nav ul li a:hover {
   z-index: 10;
   background: rgba(0, 0, 0, 0.6);
   color: white;
-  border: 2px solid var(--gold);
+  border: none;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -258,24 +253,11 @@ nav ul li a:hover {
   cursor: pointer;
   transition: all 0.3s;
   font-size: 1.3rem;
-  border: none;
-  outline: none;
 }
 .video-sound-btn:hover {
   background: var(--gold);
   color: var(--dark-red);
   transform: scale(1.1);
-}
-
-@keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 @keyframes fadeInUp {
   0% {
@@ -287,13 +269,11 @@ nav ul li a:hover {
     transform: translateY(0);
   }
 }
-
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 4rem 2rem;
 }
-
 /* Cards */
 .card-grid {
   display: grid;
@@ -301,7 +281,6 @@ nav ul li a:hover {
   gap: 2rem;
   margin-top: 2rem;
 }
-
 .card {
   background: white;
   border-radius: 20px;
@@ -314,20 +293,17 @@ nav ul li a:hover {
   animation: fadeInUp 0.6s ease forwards;
   cursor: pointer;
 }
-
 .card:hover {
   transform: translateY(-12px) scale(1.05);
   box-shadow: 0 20px 40px rgba(179, 27, 27, 0.3);
   border-color: var(--gold);
 }
-
 .card-img {
   width: 100%;
   height: 200px;
   object-fit: cover;
   border-bottom: 4px solid var(--gold);
 }
-
 .card-content {
   padding: 1.5rem;
 }
@@ -338,9 +314,7 @@ nav ul li a:hover {
 }
 .card-content p {
   color: #4a2e1e;
-  font-weight: 400;
 }
-
 .intro-text {
   font-size: 1.2rem;
   background: var(--light-gold);
@@ -351,7 +325,6 @@ nav ul li a:hover {
   max-width: 900px;
   margin: 2rem auto;
 }
-
 .origin-content {
   display: flex;
   flex-wrap: wrap;
@@ -366,7 +339,6 @@ nav ul li a:hover {
   border-radius: 30px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
-
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -407,7 +379,6 @@ nav ul li a:hover {
 .gallery-item:hover::after {
   opacity: 1;
 }
-
 footer {
   background: var(--dark-red);
   color: white;
@@ -426,7 +397,6 @@ footer .year {
   font-weight: bold;
   color: var(--gold);
 }
-
 .fade-in {
   opacity: 0;
   transform: translateY(30px);
@@ -438,7 +408,6 @@ footer .year {
   opacity: 1;
   transform: translateY(0);
 }
-
 .back-to-top {
   position: fixed;
   bottom: 30px;
@@ -461,7 +430,6 @@ footer .year {
 .back-to-top.show {
   opacity: 1;
 }
-
 #petal-container {
   position: fixed;
   top: 0;
@@ -503,7 +471,6 @@ footer .year {
     opacity: 0;
   }
 }
-
 .greeting-toast {
   position: fixed;
   top: 100px;
@@ -514,7 +481,6 @@ footer .year {
   padding: 10px 25px;
   border-radius: 50px;
   font-weight: bold;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   z-index: 10000;
   animation: slideDownFade 2s ease forwards;
   pointer-events: none;
@@ -538,12 +504,10 @@ footer .year {
     transform: translateX(-50%) translateY(-20px);
   }
 }
-
 .pause-petals .petal {
   animation-play-state: paused;
 }
-
-/* Modal */
+/* Modal chung */
 .modal {
   display: none;
   position: fixed;
@@ -621,7 +585,63 @@ footer .year {
   transform: scale(1.2);
   color: var(--dark-red);
 }
-
+/* Feedback Modal (riêng) */
+.feedback-modal .modal-content {
+  max-width: 700px;
+}
+.feedback-form input,
+.feedback-form textarea,
+.feedback-content input,
+.feedback-content textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 1rem;
+  border: 2px solid var(--gold);
+  border-radius: 40px;
+  font-size: 1rem;
+}
+.btn-submit {
+  background: linear-gradient(135deg, var(--red), var(--dark-red));
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+.btn-submit:hover {
+  background: linear-gradient(135deg, #d43f1d, #b31b1b);
+  transform: translateY(-2px);
+}
+#commentsContainerModal {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 1rem;
+}
+.comment-item {
+  background: white;
+  border-left: 5px solid var(--gold);
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+.comment-name {
+  font-weight: bold;
+  color: var(--red);
+}
+.comment-date {
+  font-size: 0.7rem;
+  color: #999;
+  text-align: right;
+  margin-top: 5px;
+}
+.empty-msg {
+  text-align: center;
+  color: #b0a088;
+  padding: 1rem;
+}
 .music-control {
   position: fixed;
   bottom: 100px;
@@ -664,100 +684,6 @@ footer .year {
     padding: 8px 15px;
     font-size: 0.9rem;
   }
-}
-
-/* Feedback section */
-.feedback-form {
-  max-width: 800px;
-  margin: 0 auto;
-  background: rgba(255, 245, 235, 0.9);
-  border-radius: 30px;
-  padding: 2rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-.feedback-form input,
-.feedback-form textarea {
-  width: 100%;
-  padding: 12px 18px;
-  margin-bottom: 1rem;
-  border: 2px solid var(--gold);
-  border-radius: 40px;
-  font-family: inherit;
-  font-size: 1rem;
-  background: white;
-  transition: 0.2s;
-}
-.feedback-form input:focus,
-.feedback-form textarea:focus {
-  outline: none;
-  border-color: var(--red);
-  box-shadow: 0 0 0 3px rgba(179, 27, 27, 0.2);
-}
-.btn-submit {
-  background: linear-gradient(135deg, var(--red), var(--dark-red));
-  color: white;
-  border: none;
-  padding: 12px 28px;
-  border-radius: 40px;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.2s;
-  width: 100%;
-}
-.btn-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  background: linear-gradient(135deg, #d43f1d, #b31b1b);
-}
-#feedbackList {
-  margin-top: 2.5rem;
-}
-#feedbackList h3 {
-  font-size: 1.6rem;
-  color: var(--dark-red);
-  margin-bottom: 1rem;
-  border-left: 5px solid var(--gold);
-  padding-left: 1rem;
-}
-.comment-item {
-  background: white;
-  padding: 1rem 1.5rem;
-  margin-bottom: 1rem;
-  border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  border-left: 6px solid var(--gold);
-}
-.comment-name {
-  font-weight: bold;
-  color: var(--red);
-  font-size: 1.1rem;
-  margin-bottom: 0.3rem;
-}
-.comment-email {
-  font-size: 0.8rem;
-  color: #888;
-  margin-bottom: 0.5rem;
-}
-.comment-text {
-  font-size: 0.95rem;
-  line-height: 1.4;
-  color: #2c1810;
-}
-.comment-date {
-  font-size: 0.7rem;
-  color: #b0a088;
-  text-align: right;
-  margin-top: 0.5rem;
-}
-.empty-comment {
-  text-align: center;
-  color: #b0a088;
-  font-style: italic;
-  padding: 1rem;
-}
-
-@media (max-width: 600px) {
   .hero-content h2 {
     font-size: 2.8rem;
   }
